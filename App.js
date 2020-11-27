@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
+      
       <Text style={styles.text1}> Name: Hamza Rehman</Text>
       <Text style={styles.text2}> Reg. No: FA17-BCS-049</Text>
     </View>
