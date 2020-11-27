@@ -1,30 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Componenet, useState } from 'react';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
+import Constants from 'expo-constants';
 
 export default function App() {
+  const [getInput,setInput] = useState("");
   return (
-    <View style={styles.container}>
-      
-      <Text style={styles.text1}> Name: Hamza Rehman</Text>
-      <Text style={styles.text2}> Reg. No: FA17-BCS-049</Text>
+    <View>
+      <View style={{width: '100%', flexDirection:'row'}}>
+        <Text>Original Price:</Text>
+        <TextInput
+          style={{height: '40px', backgroundColor:'orange',width:'100%'}}
+          onChangeText={getInput => setInput(getInput)}
+          defaultValue={getInput}
+        />
+      </View>
+      <View style={{width: '100%', flexDirection:'row'}}>
+        <Text>Discount Percentage:</Text>
+        <TextInput
+          style={{height: '40px', backgroundColor:'orange',width:'100%'}}
+          onChangeText={getInput => setInput(getInput)}
+          defaultValue={getInput}
+        />
+      </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#eff542',
-    alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 15,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
   },
-  text1:{
-    fontSize:20,
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
-  text2: {
-    fontSize: 25,
-    fontStyle: "italic",
-  }
 });
