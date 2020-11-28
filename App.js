@@ -8,39 +8,50 @@ export default function App() {
 
 
   const discountCalculation =()=> {
-    return (getOriginalPrice / 100) * getDiscountPercentage;
+    if (isNaN(getDiscountPercentage) || isNaN(getOriginalPrice) || (getOriginalPrice < 0) || (getDiscountPercentage < 0) || (getDiscountPercentage > 100))
+      return "Please Enter a Positive Number";
+    else return (getOriginalPrice / 100) * getDiscountPercentage;
   };
   const finalPriceCalculation =()=> {
-    return (
-      getOriginalPrice - (getOriginalPrice / 100) * getDiscountPercentage);
+    if (isNaN(getDiscountPercentage) || isNaN(getOriginalPrice) || (getOriginalPrice < 0) || (getDiscountPercentage < 0) || (getDiscountPercentage > 100))
+      return "Please Enter a Positive Number less than 100";
+    else return (getOriginalPrice - (getOriginalPrice / 100) * getDiscountPercentage);
   };
 
-
   return (
-    <View>
-      <View style={{width: '100%', flexDirection:'row'}}>
-        <Text>Original Price:</Text>
-        <TextInput
-          style={{height: '40px', backgroundColor:'orange',width:'60%'}}
-          onChangeText={getOriginalPrice => setOriginalPrice(getOriginalPrice)}
-          value={getOriginalPrice}
-          keyboardType={'number-pad'}
-        />
+    <View style={styles.container}>
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.discountHeader}>Discount App</Text>
       </View>
-      <View style={{width: '100%', flexDirection:'row'}}>
-        <Text>Discount Percentage:</Text>
-        <TextInput
-          style={{height: '40px', backgroundColor:'orange',width:'60%'}}
-          onChangeText={getDiscountPercentage => setDiscountPercentage(getDiscountPercentage)}
-          value={getDiscountPercentage}
-          keyboardType={'number-pad'}
-        />
+      
+      <View style={{width: '95%'}}>
+        <View style={styles.inputContainersWithText}>
+          <Text>Original Price:</Text>
+          <TextInput
+            style={styles.inputContainers}
+            onChangeText={getOriginalPrice => setOriginalPrice(getOriginalPrice)}
+            value={getOriginalPrice}
+            keyboardType={'number-pad'}
+          />
+        </View>
+        <View style={styles.inputContainersWithText}>
+          <Text>Discount Percentage:</Text>
+          <TextInput
+            style={styles.inputContainers}
+            onChangeText={getDiscountPercentage => setDiscountPercentage(getDiscountPercentage)}
+            value={getDiscountPercentage}
+            keyboardType={'number-pad'}
+          />
+        </View>
       </View>
-      <Text>
-        Discounted Amount: {discountCalculation()}</Text>
-        <Text>
+      <View>
+        <Text style={styles.inputContainersWithText}>
+          Discounted Amount: {discountCalculation()}
+        </Text>
+        <Text style={styles.inputContainersWithText}>
           Final Price: {finalPriceCalculation()}
         </Text>
+      </View>
     </View>
   );
 }
@@ -52,6 +63,22 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
     padding: 8,
+  },
+  discountHeader: {
+    marginBottom:'50px',
+    fontWeight:'bold',
+    fontSize: '25px'
+  },
+  inputContainersWithText: {
+    width: '100%',
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    margin: '10px'
+  },
+  inputContainers: {
+    height: '30px',
+    backgroundColor:'#ffffff',
+    width:'60%'
   },
   paragraph: {
     margin: 24,
