@@ -1,10 +1,13 @@
 import React, { Componenet, useState } from 'react';
-import { Text, View, StyleSheet, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
 import Constants from 'expo-constants';
 
 export default function App() {
   const [getOriginalPrice,setOriginalPrice] = useState("");
   const [getDiscountPercentage,setDiscountPercentage] = useState("");
+  const [getOriginalPriceArray,setOriginalPriceArray] = useState([]);
+  const [getDiscountPercentageArray,setDiscountPercentageArray] = useState([]);
+  const [getModalVisible, setModalVisible] = useState(false);
 
 
   const discountCalculation =()=> {
@@ -17,13 +20,18 @@ export default function App() {
       return "Please Enter a Positive Number less than 100";
     else return (getOriginalPrice - (getOriginalPrice / 100) * getDiscountPercentage);
   };
+  const saveButton =()=> {
+    if (!isNaN(getOriginalPrice) && !isNaN(getDiscountPercentage)) {
+      setOriginalPriceArray([...getOriginalPriceArray, getOriginalPrice]);
+      setDiscountPercentageArray([...getDiscountPercentageArray, getDiscountPercentage]);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <Text style={styles.discountHeader}>Discount App</Text>
       </View>
-      
       <View style={{width: '95%'}}>
         <View style={styles.inputContainersWithText}>
           <Text>Original Price:</Text>
@@ -52,6 +60,16 @@ export default function App() {
           Final Price: {finalPriceCalculation()}
         </Text>
       </View>
+      <View>
+        <Text>{getOriginalPriceArray}</Text>
+        <Text>{getDiscountPercentageArray}</Text>
+      </View>
+      <View>
+        <Button 
+          onPress={saveButton} 
+          title="Save Calculations"
+        />
+      </View>
     </View>
   );
 }
@@ -79,11 +97,5 @@ const styles = StyleSheet.create({
     height: '30px',
     backgroundColor:'#ffffff',
     width:'60%'
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+  }
 });
