@@ -1,5 +1,5 @@
 import React, { Componenet, useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button, Modal, TouchableHighlight, FlatList } from 'react-native';
 import Constants from 'expo-constants';
 
 export default function App() {
@@ -29,9 +29,47 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={getModalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.container}>
+            <FlatList
+              data={getOriginalPriceArray}
+              extraData={getDiscountPercentageArray}
+              renderItem={({ item, index }) => (
+                <View>
+                  <Text style={styles.item}>
+                    Original Price: {item} 
+                    Discount Perecntage:{getDiscountPercentageArray[index]}
+                  </Text>
+                  <Text style={{textAlign:'center'}}>
+                    Final Product Price:{item - (item / 100) * getDiscountPercentageArray[index]}
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
+
+
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              onPress={() => {
+                setModalVisible(!getModalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
       <View style={{alignItems: 'center'}}>
         <Text style={styles.discountHeader}>Discount App</Text>
       </View>
+      
       <View style={{width: '95%'}}>
         <View style={styles.inputContainersWithText}>
           <Text>Original Price:</Text>
@@ -70,6 +108,15 @@ export default function App() {
           title="Save Calculations"
         />
       </View>
+
+      <TouchableHighlight
+        style={styles.openButton}
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text style={styles.textStyle}>Show Modal</Text>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -97,5 +144,6 @@ const styles = StyleSheet.create({
     height: '30px',
     backgroundColor:'#ffffff',
     width:'60%'
-  }
+  },
+  
 });
